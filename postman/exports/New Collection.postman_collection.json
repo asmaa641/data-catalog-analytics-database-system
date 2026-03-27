@@ -1,0 +1,32 @@
+{
+  "info": {
+    "name": "New Collection",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "https://catalog.data.gov/api/3/action/package_search?rows=5&start=0",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://catalog.data.gov/api/3/action/package_search?rows=5&start=0",
+          "protocol": "https",
+          "host": ["catalog", "data", "gov"],
+          "path": ["api", "3", "action", "package_search"],
+          "query": [
+            {
+              "key": "rows",
+              "value": "5"
+            },
+            {
+              "key": "start",
+              "value": "0"
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
