@@ -3,3 +3,4 @@ python-dotenv
 cryptography
 streamlit
 pandas
+mysql-connector-python
