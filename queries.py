@@ -21,22 +21,53 @@ def register_user(conn):
 
 def add_new_user_usage(conn):
     cursor = conn.cursor()
+
     try:
         email = input("User Email: ").strip()
         project_name = input("Project Name: ").strip()
-        project_category = input("Project Category (analytics / machine learning / field research): ").strip()
+        project_category = input(
+            "Project Category (analytics / machine learning / field research): "
+        ).strip()
         dataset_id = input("Dataset ID: ").strip()
 
+        # Check if Dataset exists
         cursor.execute("""
-            INSERT INTO DatasetUsage (Project_Name, Project_Category, Dataset_ID, User_Email)
+            SELECT Dataset_ID
+            FROM Dataset
+            WHERE Dataset_ID = %s
+        """, (dataset_id,))
+
+        dataset_exists = cursor.fetchone()
+
+        if not dataset_exists:
+            print(f"Error: Dataset_ID '{dataset_id}' does not exist in Dataset table.")
+            return
+
+        # Check if User exists
+        cursor.execute("""
+            SELECT Email
+            FROM Users
+            WHERE Email = %s
+        """, (email,))
+
+        user_exists = cursor.fetchone()
+
+        if not user_exists:
+            print(f"Error: User '{email}' does not exist in Users table.")
+            return
+
+        # Insert usage
+        cursor.execute("""
+            INSERT INTO DatasetUsage
+            (Project_Name, Project_Category, Dataset_ID, User_Email)
             VALUES (%s, %s, %s, %s)
         """, (project_name, project_category, dataset_id, email))
 
         conn.commit()
         print("New usage added successfully.")
+
     except Exception as e:
         print(f"Error adding usage: {e}")
-
 
 def view_usage(conn):
     cursor = conn.cursor()
