@@ -30,33 +30,28 @@ def add_new_user_usage(conn):
         ).strip()
         dataset_id = input("Dataset ID: ").strip()
 
-        # Check if Dataset exists
         cursor.execute("""
             SELECT Dataset_ID
             FROM Dataset
             WHERE Dataset_ID = %s
         """, (dataset_id,))
-
         dataset_exists = cursor.fetchone()
 
         if not dataset_exists:
             print(f"Error: Dataset_ID '{dataset_id}' does not exist in Dataset table.")
             return
 
-        # Check if User exists
         cursor.execute("""
             SELECT Email
             FROM Users
             WHERE Email = %s
         """, (email,))
-
         user_exists = cursor.fetchone()
 
         if not user_exists:
             print(f"Error: User '{email}' does not exist in Users table.")
             return
 
-        # Insert usage
         cursor.execute("""
             INSERT INTO DatasetUsage
             (Project_Name, Project_Category, Dataset_ID, User_Email)
