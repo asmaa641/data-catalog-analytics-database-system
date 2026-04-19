@@ -12,7 +12,7 @@ def get_connection():
     port = get_secret("AVN_PORT")
     user = get_secret("AVN_USER")
     password = get_secret("AVN_PASSWORD")
-    database = get_secret("AVN_DATABASE")
+    database = get_secret("AVN_DB")
 
     if not all([host, port, user, password, database]):
         raise ValueError(
